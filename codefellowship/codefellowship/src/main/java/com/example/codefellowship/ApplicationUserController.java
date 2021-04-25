@@ -54,10 +54,17 @@ public class ApplicationUserController {
 //        return "profile.html";
 //    }
 
+//    @GetMapping("/users/{id}")
+//    public String getUserInfo(Principal p, Model m) {
+//        m.addAttribute("curUser", ((UsernamePasswordAuthenticationToken)p).getPrincipal());
+//        return "profile.html";
+//    }
+
     @GetMapping("/users/{id}")
     public String getUserInfo(Principal p, Model m) {
-        m.addAttribute("curUser", ((UsernamePasswordAuthenticationToken)p).getPrincipal());
-        return "profile.html";
+        ApplicationUser currentUser = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
+        m.addAttribute("curUser", currentUser);
+        return "userprofile";
     }
 
 }

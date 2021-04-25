@@ -33,7 +33,7 @@ public class PostController {
         m.addAttribute("curUser", me);
         m.addAttribute("posts", posts);
 
-        return "profile.html";
+        return "profile";
     }
 
     @GetMapping("/posts/add")
