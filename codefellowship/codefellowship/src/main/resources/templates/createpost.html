@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-<form method="POST" th:action="@{/posts/add}"  id="usrform">
-    <h2>Add Post</h2>
+<body style="background-image: url('https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80'); background-repeat: no-repeat;
+  background-size: cover">
+<h2 style="text-align:center; color:white; font-size:xx-large">Add Post</h2>
+<form method="POST" th:action="@{/posts/add}"  id="usrform" style="text-align:center; width: 750px; margin-left:auto; margin-right:auto">
     <textarea rows="10" cols="100" name="body" form="usrform"></textarea>
-    <button type="submit">Submit Post</button>
+    <button style="color:black; font-size:larger; background-color: white; width: 175px; border: 2px solid pink" type="submit">Submit Post</button>
+    <br>
+    <br>
 </form>
 
 </body>

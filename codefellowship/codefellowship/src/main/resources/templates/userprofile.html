@@ -22,19 +22,5 @@
     <p style="color:white; font-size:x-large">Date of Birth: <span th:text="${curUser.dateOfBirth}"></span></p>
     <p style="color:white; font-size:x-large">Bio: <span th:text="${curUser.bio}"></span></p>
 </div>
-
-<div style="text-align:center; margin-left:auto; margin-right:auto; border: 4px solid white; width:500px; margin-bottom:20px" th:if="${not #lists.isEmpty(curUser.posts)}">
-    <h3 style="color:white; font-size:xx-large">Your posts</h3>
-    <ul>
-        <li th:each="post : ${curUser.posts}">
-
-            <span style="color:white; font-size:larger" th:text="${post.body}"></span>
-            <p>Posted on <span th:text="${#dates.format(post.createdAt, 'dd-MMM-yyyy')}"></span></p>
-
-        </li>
-    </ul>
-</div>
-
-
 </body>
 </html>
