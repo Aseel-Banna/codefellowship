@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="POST" th:action="@{/posts/add}"  id="usrform">
+    <h2>Add Post</h2>
+    <textarea rows="10" cols="100" name="body" form="usrform"></textarea>
+    <button type="submit">Submit Post</button>
+</form>
+
+</body>
+</html>
