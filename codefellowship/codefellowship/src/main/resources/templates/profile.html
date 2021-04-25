@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Welcome, <span th:text="${curUser.firstName}"></span>!</h2>
+
+<img class="logo" src="https://www.tnmc.go.tz/images/2020/avatar.jpg">
+
+<div>
+
+    <h3>Your Information</h3>
+    <p>User Name: <span th:text="${curUser.username}"></span></p>
+    <p>First Name: <span th:text="${curUser.firstName}"></span></p>
+    <p>Last Name: <span th:text="${curUser.lastName}"></span></p>
+    <p>Date of Birth: <span th:text="${curUser.dateOfBirth}"></span></p>
+    <p>Bio: <span th:text="${curUser.bio}"></span></p>
+
+</div>
+
+<div th:if="${not #lists.isEmpty(curUser.posts)}">
+    <h3>Your posts</h3>
+</div>
+<ul>
+    <li th:each="post : ${curUser.posts}">
+
+        <span th:text="${post.body}"></span>
+        <p>Posted on <span th:text="${#dates.format(post.createdAt, 'dd-MMM-yyyy')}"></span></p>
+
+    </li>
+</ul>
+
+</body>
+</html>
