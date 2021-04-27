@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1579546929662-711aa81148cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80'); background-repeat: no-repeat;
+  background-size: cover">
+<h2 style="text-align:center; color:white; font-size:xx-large">All Users!!</h2>
+<div th:each="user : ${users}" style="text-align:center; margin-left:auto; margin-right:auto; border: 4px solid white; width:250px; margin-bottom:20px">
+    <form method="get" th:action="'/users/'+${user.id}" style="text-align:center; border: 5px solid white; margin-left:auto; margin-right:auto">
+        <h3 style="text-align:center; color:white; font-size:x-large" th:text="${user.username}"></h3>
+        <input style="color:black; font-size:larger; background-color: white; width: 150px; border: 2px solid pink" type="submit" value="View Profile">
+        <br>
+        <br>
+    </form>
+</div>
+</body>
+</html>

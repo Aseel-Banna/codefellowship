@@ -6,12 +6,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Set;
 
 @Controller
 public class ApplicationUserController {
@@ -20,6 +20,8 @@ public class ApplicationUserController {
     ApplicationUserRepository applicationUserRepository;
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    UserFollowersRepository usersFollowersRepository;
 
     @GetMapping("/signup")
     public String getSignUpPage(){
@@ -60,11 +62,67 @@ public class ApplicationUserController {
 //        return "profile.html";
 //    }
 
+
+
+
     @GetMapping("/users/{id}")
-    public String getUserInfo(Principal p, Model m) {
-        ApplicationUser currentUser = (ApplicationUser)((UsernamePasswordAuthenticationToken) p).getPrincipal();
-        m.addAttribute("curUser", currentUser);
-        return "userprofile";
+    public String getUserInfo(Principal p, Model m, @PathVariable(value = "id") int id) {
+        if(((UsernamePasswordAuthenticationToken) p) != null){
+            ApplicationUser userDetails =(ApplicationUser) ((UsernamePasswordAuthenticationToken) p).getPrincipal();
+            m.addAttribute("username", userDetails.getUsername());
+        }
+        System.out.println("helllo");
+        ApplicationUser applicationUser =(ApplicationUser) applicationUserRepository.findById(id).get();
+        if(applicationUser != null){
+            m.addAttribute("curUser", applicationUser);
+            return "userprofile";
+        }
+        return "/error?message=You%are%not%allow%to%delete%the%user";
     }
+
+    @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
+    public String handleGetAllUsersData(Model m,Principal p) {
+        m.addAttribute("users", applicationUserRepository.findAll());
+        return "allUsers";
+    }
+
+    @RequestMapping(value = "/follow/{id}", method = RequestMethod.GET)
+    public String handleFollowUser(Model m, @PathVariable(value = "id") Integer id,Principal p) {
+        if(((UsernamePasswordAuthenticationToken) p) != null){
+            ApplicationUser userDetails =(ApplicationUser) ((UsernamePasswordAuthenticationToken) p).getPrincipal();
+            ApplicationUser applicationUser = applicationUserRepository.findById(userDetails.getId()).get();
+            ApplicationUser followedUser = applicationUserRepository.findById(id).get();
+            System.out.println();
+            usersFollowersRepository.save(new UserFollowers(applicationUser,followedUser));
+            System.out.println(usersFollowersRepository.findAll());
+        }
+//        m.addAttribute("users", applicationUserRepository.findAll());
+        return "allUsers";
+    }
+
+
+
+//        m.addAttribute("followings", follows);
+
+
+    @RequestMapping(value = "/feed", method = RequestMethod.GET)
+    public String handleFeed(Model m,Principal p) {
+        if(((UsernamePasswordAuthenticationToken) p) != null){
+            ApplicationUser userDetails =(ApplicationUser) ((UsernamePasswordAuthenticationToken) p).getPrincipal();
+            ApplicationUser applicationUser = applicationUserRepository.findById(userDetails.getId()).get();
+            ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
+            ArrayList allFollowerPosts = new ArrayList();
+            Set<UserFollowers> allFollower  =  applicationUser.getUsers();
+            for (UserFollowers user:  allFollower){
+                allFollowerPosts.addAll(user.getApplicationUserFollower().getPosts());
+            }
+//            m.addAttribute("users", userDetails);
+            m.addAttribute("currentUser", currentUser);
+            m.addAttribute("posts",allFollowerPosts);
+            System.out.println(allFollowerPosts);
+        }
+        return "posts";
+    }
+
 
 }

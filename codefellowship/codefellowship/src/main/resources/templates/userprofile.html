@@ -15,6 +15,9 @@
     <br>
     <br>
     <img style="text-align:center; margin-left:auto; margin-right:auto; border-radius:15px" src="https://www.tnmc.go.tz/images/2020/avatar.jpg">
+    <br>
+    <br>
+    <a style="color:white; font-size:larger; border: 2px solid pink; padding:4px" th:if="${username != curUser.username}" th:href="'/follow/' + ${curUser.id}"> Follow </a>
     <h3 style="color:white; font-size:xx-large">Your Information</h3>
     <p style="color:white; font-size:x-large">User Name: <span th:text="${curUser.username}"></span></p>
     <p style="color:white; font-size:x-large">First Name: <span th:text="${curUser.firstName}"></span></p>
