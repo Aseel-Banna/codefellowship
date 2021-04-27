@@ -59,4 +59,14 @@ public class Post {
     public void setUser(ApplicationUser user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", body='" + body + '\'' +
+                ", createdAt=" + createdAt +
+                ", user=" + user +
+                '}';
+    }
 }
