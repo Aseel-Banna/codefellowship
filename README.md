@@ -10,10 +10,13 @@ In the main page, user can sign up by clicking on the link that will preview a s
 7. /follow/{id} - this route appears when user follow another user.
 8. /feed - page that views all of the posts from the users that they follow.
 
-## To run the application
+## User Story
 * As a user, you have to use ***/signup*** to create a profile or if you have created one, use ***/login*** to log in to your profile. 
 * Use ***/users/{id}*** to get your information.
 * Use ***/posts/add*** route to add a post, then use ***/myprofile*** to access your information and your posts
 * Use ***/allUsers*** route so, you can follow other users.
 * Use ***/feed*** route to see all posts from users that you are following.
 
+## To run the application
+1. Clone the repo and go to the directory. On the terminal, run `./gradlew bootRun`
+2. Open your web browser and go to localhost:8282
