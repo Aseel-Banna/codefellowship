@@ -49,21 +49,6 @@ public class ApplicationUserController {
     public RedirectView login(){
         return new RedirectView("/myprofile");
     }
-//
-//    @GetMapping("/myprofile")
-//    public String getUserProfilePage(Principal p, Model m){
-//        m.addAttribute("user", ((UsernamePasswordAuthenticationToken)p).getPrincipal());
-//        return "profile.html";
-//    }
-
-//    @GetMapping("/users/{id}")
-//    public String getUserInfo(Principal p, Model m) {
-//        m.addAttribute("curUser", ((UsernamePasswordAuthenticationToken)p).getPrincipal());
-//        return "profile.html";
-//    }
-
-
-
 
     @GetMapping("/users/{id}")
     public String getUserInfo(Principal p, Model m, @PathVariable(value = "id") int id) {
@@ -82,18 +67,24 @@ public class ApplicationUserController {
 
     @RequestMapping(value = "/allUsers", method = RequestMethod.GET)
     public String handleGetAllUsersData(Model m,Principal p) {
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
+        m.addAttribute("currentUser", currentUser);
         m.addAttribute("users", applicationUserRepository.findAll());
+
         return "allUsers";
     }
 
     @RequestMapping(value = "/follow/{id}", method = RequestMethod.GET)
     public String handleFollowUser(Model m, @PathVariable(value = "id") Integer id,Principal p) {
+        ApplicationUser currentUser = applicationUserRepository.findByUsername(p.getName());
         if(((UsernamePasswordAuthenticationToken) p) != null){
             ApplicationUser userDetails =(ApplicationUser) ((UsernamePasswordAuthenticationToken) p).getPrincipal();
             ApplicationUser applicationUser = applicationUserRepository.findById(userDetails.getId()).get();
             ApplicationUser followedUser = applicationUserRepository.findById(id).get();
             System.out.println();
             usersFollowersRepository.save(new UserFollowers(applicationUser,followedUser));
+            m.addAttribute("users", applicationUserRepository.findAll());
+            m.addAttribute("currentUser", currentUser);
             System.out.println(usersFollowersRepository.findAll());
         }
 //        m.addAttribute("users", applicationUserRepository.findAll());
